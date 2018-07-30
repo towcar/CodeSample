@@ -21,8 +21,8 @@ import retrofit2.http.Body;
 
 /**
  * Created by Carson on 5/15/2018.
- * <p>
- * Feel free to use code just give credit please :)
+ * This is a class from my Dad Jokes apps that worked as a manager for obtaining joke data from various methods.
+ * While the variety was not necessary it was more to flex practicing pull data using Retrofit and GraphQL/
  */
 public class JokeFetcher {
 
@@ -33,19 +33,18 @@ public class JokeFetcher {
 
     public void setupJoke() {
 
+        //obtain joke using GraphQl generated classes
         MyApolloClient.setupApollo().query(Jokes.builder().build()).enqueue(new ApolloCall.Callback<Jokes.Data>() {
             @Override
             public void onResponse(@Nonnull Response response) {
-                //pull the response and pass into a string
+                //pulls the response and passes it into a string
                 Jokes.Data responseData = (Jokes.Data) response.data();
                 jokeText = responseData.joke().joke();
-                Log.e("setupJoke", "Joke Setup:" + jokeText);
             }
 
             @Override
             public void onFailure(@Nonnull ApolloException e) {
-                //if failed set text for user to receive
-                //attempt user to try different method
+                //if failed to get response then retrofit is called to attempt to pull the joke
                 setupRetroJoke();
             }
         });
@@ -61,63 +60,19 @@ public class JokeFetcher {
         call.enqueue(new Callback<RetroJoke>() {
             @Override
             public void onResponse(Call<RetroJoke> call, retrofit2.Response<RetroJoke> response) {
-                //generateDataList(response.body());
-
-                Log.e("onResponse","Joke: " + response.isSuccessful());
 
                 jokeText = "StudentId  :  " + response.body().toString();
                 jokeText = response.body().getJokeString();
-                //jokeText = responseData.joke().joke();
-                Log.e("On Response","RetroJoke: " + jokeText);
-
 
             }
 
             @Override
             public void onFailure(Call<RetroJoke> call, Throwable t) {
-                //progressDoalog.dismiss();
+  
                 Log.e("Build List", "List Failed");
-                //Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                
             }
         });
-
-    }
-
-    public CustomAdapter getRetroJokeList(final Context context) {
-        Log.e("onResponse","Called get Restro Joke List");
-        /*Create handle for the RetrofitInstance interface*/
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<RetroJoke> call = service.searchJoke();
-        call.enqueue(new Callback<RetroJoke>() {
-            @Override
-            public void onResponse(Call<RetroJoke> call, retrofit2.Response<RetroJoke> response) {
-
-                Log.e("onResponse","Joke: " + response.isSuccessful());
-
-                Log.d("DataCheck",new Gson().toJson(response.body()));
-                //response.body().getListSize();
-                //List<RetroJoke> myList = response.body().;
-                Log.e("On Response","RetroJoke: " +  response.body().toString());
-
-                List<RetroJoke> jokes = response.body().getResults();
-                /*jokeList = (List<RetroJoke>) response.body();
-                CustomAdapter jokeAdapter = new CustomAdapter(context,jokeList);
-                RetroJoke retroJoke = response.body();*/
-                Log.e("On Response","RetroJoke: " +  jokes.size());
-                jokeAdapter = new CustomAdapter(context, jokes);
-                Log.e("On Response","RetroJoke: " +  jokeAdapter.getItemCount());
-
-            }
-
-            @Override
-            public void onFailure(Call<RetroJoke> call, Throwable t) {
-                //progressDoalog.dismiss();
-                Log.e("Build List", "List Failed");
-                // Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        return jokeAdapter;
     }
 
     public CustomAdapter getList() {
