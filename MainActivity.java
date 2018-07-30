@@ -34,6 +34,14 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
 import yalantis.com.sidemenu.model.SlideMenuItem;
 import yalantis.com.sidemenu.util.ViewAnimator;
 
+/**
+ * Created by Carson on 5/14/2018.
+ * This is a class from my Dad Jokes apps that was the main activity for the app. I applied a bit of view binding
+ * with Butterknife. This sets up the activity but uses an animation API that uses fragments to create a great
+ * transition with side navigation menu. Much of this code if for the api's animation, might be worth building
+ * a separate manager class to clean the code.
+ */
+
 public class MainActivity extends AppCompatActivity implements ViewAnimator.ViewAnimatorListener {
 
     @BindView(R.id.drawer_layout)
@@ -63,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
         ButterKnife.bind(this);
 
         if (savedInstanceState == null) {
-            //Grab initial joke (setup loaded eventually)
+            //Grab a joke initially giving the appearance of faster loading.
             jokeFetcher.setupJoke();
             //Create new fragment
             fragmentRandom = RandomFragment.newInstance();
@@ -71,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
                     .replace(R.id.content_frame, fragmentRandom)
                     .commit();
         } else {
-            //Grab original fragment
+            //Grab original existing fragment
             fragmentRandom = (RandomFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
         }
 
@@ -87,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
             }
         });
 
+        //finish setup
         setActionBar();
         createMenuList();
         viewAnimator = new ViewAnimator<>(this, list, fragmentRandom, drawerLayout, this);
@@ -142,9 +151,9 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
+    //sets up animation and swaps underlying fragments for more functionality
     private ScreenShotable replaceFragment(Resourceble slideMenuItem, ScreenShotable screenShotable, int topPosition) {
-        //sets up animation and swaps underlying fragments for more functionality
-        //view = findViewById(R.id.content_frame);
+        
         int finalRadius = Math.max(view.getWidth(), view.getHeight());
         Animator animator = ViewAnimationUtils.createCircularReveal(view, 0, topPosition, 0, finalRadius);
         animator.setInterpolator(new AccelerateInterpolator());
@@ -215,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements ViewAnimator.View
         linearLayout.addView(view);
     }
 
+    //creates the items for the navigation bar, left others commented out for future expansion of fragments and items.
     private void createMenuList() {
         //Attach string and icon to MenuItem.
         SlideMenuItem menuItem0 = new SlideMenuItem("Close", R.drawable.close);
