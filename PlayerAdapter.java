@@ -18,8 +18,8 @@ import java.util.List;
 
 /**
  * Created by Carson on 2018-02-01.
- * <p>
- * Feel free to use code just give credit please :)
+ * This Adapter was used in my Score Keeper app. This is mostly an example of a standard adapter that included
+ * the ability to highlight items when selected.
  */
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHolder> implements View.OnClickListener {
@@ -39,10 +39,8 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHold
     /* ViewHolder for each item */
     class PlayerHolder extends RecyclerView.ViewHolder  {
 
-
         TextView playerName;
         TextView playerScore;
-
 
         PlayerHolder(View itemView) {
             super(itemView);
@@ -54,6 +52,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHold
 
     }
 
+    //create recycler view item layouts
     @Override
     public PlayerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -62,6 +61,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerHold
         return new PlayerHolder(itemView);
     }
 
+    //attach data to individual items
     @Override
     public void onBindViewHolder(@NonNull PlayerHolder holder, int position) {
         Players playerItem = playerList.get(position);
