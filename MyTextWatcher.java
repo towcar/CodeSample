@@ -32,39 +32,34 @@ public class MyTextWatcher implements TextWatcher {
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        //Log.e("watcher", "sizebeforetext = " + size);
+        //unused method
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        //Log.e("watcher", "onTextChanged");
+        //unused method
     }
 
     @Override
     public void afterTextChanged(Editable s) {
-
+        //listen and modify based on changes to textfield
         String name = s.toString();
-
-        Log.e("Empty Text","Text is " + name);
 
         if (editText.getTag() != null) {
             int position = (int) editText.getTag();
             size = listener.getSize();
 
-            //Log.e("watcher", "size" + size + ", name length " + name.length());
-            //int size = (int) editText.getTag(R.string.listSize);
             //size is declared above
             if (name.length() > 0) {
-                //if editing last position and size isn't too big (for now)
+                //if editing last position
                 if (position + 1 == size) {
                     //add an item to the adapter list
                     size += 1;
                     listener.addPlayer();
                     listener.listListener();
-                    Log.e("Edit Text", "Listener Player Added");
                 }
-                if (position + 1 < size) { //update string name
-                    Log.e("Edit Text", "Listener Player Edited");
+                if (position + 1 < size) { 
+                    //update string name
                     listener.editPlayer(name, position);
                 }
             } else {
@@ -78,13 +73,6 @@ public class MyTextWatcher implements TextWatcher {
                     //In the situation of deleting a player higher up this will set it to be blank otherwise it won't update to ""
                     listener.editPlayer(name, position);
                 }
-
-
-                //scenario of deleting something even lower on the list
-                if (position < size) {
-
-                }
-
 
             }
 
