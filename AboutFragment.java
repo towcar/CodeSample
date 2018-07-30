@@ -22,8 +22,10 @@ import yalantis.com.sidemenu.interfaces.ScreenShotable;
 
 /**
  * Created by Carson on 5/10/2018.
- * <p>
- * Feel free to use code just give credit please :)
+ * 
+ * This is a fragment from my Dad Jokes App. The fragment was used for a animation feature that tied 
+ * in with the ScreenShotable implementation. This additionally uses an API that creates a great looking 
+ * About app screen with clickable links and information.
  */
 public class AboutFragment extends Fragment implements ScreenShotable {
 
@@ -39,10 +41,9 @@ public class AboutFragment extends Fragment implements ScreenShotable {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //set up from medyo:android-about-page api
+        //set up from medyo:android-about-page api for displaying information
         return new AboutPage(this.getContext())
                 .isRTL(false)
-                //.setImage(R.mipmap.ic_launcher_main)
                 .setDescription(getString(R.string.about))
                 .addItem(new Element().setTitle("Version 1.1"))
                 .addGroup("Connect with us")
@@ -89,8 +90,6 @@ public class AboutFragment extends Fragment implements ScreenShotable {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     }
