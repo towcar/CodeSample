@@ -9,8 +9,10 @@ import com.carsonskjerdal.app.scorekeeperplus.MainPage.AddPlayerInterface;
 
 /**
  * Created by Carson on 2018-01-26.
- * <p>
- * Feel free to use code just give credit please :)
+ * This was a great customer listener for editing a textfield. This allowed me to create more textfields
+ * in a recycler view based on if there is any text in the edit text. For example: if begin writing a name, it creates
+ * a new text field below or deletes if the text is removed. This piece was used in a scorekeeper app I developed.
+ * Hopefully one day will apply it as an independent library.
  */
 
 public class MyTextWatcher implements TextWatcher {
